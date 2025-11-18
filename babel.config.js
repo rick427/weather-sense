@@ -9,9 +9,11 @@ module.exports = {
           '@/components': './src/components',
           '@/common': './src/common',
           '@/screens': './src/screens',
+          '@/routes': './src/routes',
           '@/services': './src/services',
         }
       }
     ],
+    'react-native-worklets/plugin',
   ]
 };
