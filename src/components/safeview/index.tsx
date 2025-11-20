@@ -5,6 +5,7 @@ import styles from "./safeview.styles";
 import { sizes } from '@/common/theme';
 
 interface SafeViewProps {
+    bg?: string;
     scrollRef?: React.Ref<ScrollView>;
     withPadding?: boolean;
     withScrollElement?: boolean;
@@ -15,6 +16,7 @@ interface SafeViewProps {
 
 export default function SafeView(props:SafeViewProps) {
     const { 
+        bg = "#ffffff",
         children, 
         scrollRef,
         withScrollElement = true, 
@@ -25,7 +27,7 @@ export default function SafeView(props:SafeViewProps) {
     
     const resolvePadding = withPadding ? sizes.base * 2 : 0;
     return (
-        <SafeAreaView style={styles.parent} edges={['top']}>
+        <SafeAreaView style={[styles.parent, {backgroundColor:bg}]} edges={['top']}>
             <StatusBar
                 translucent={true}
                 animated={true}
@@ -36,6 +38,7 @@ export default function SafeView(props:SafeViewProps) {
             {withScrollElement ? (
                 <ScrollView 
                     ref={scrollRef}
+                    style={{backgroundColor: bg}}
                     refreshControl={refreshControl}
                     scrollEnabled={scrollEnabled}
                     contentContainerStyle={[

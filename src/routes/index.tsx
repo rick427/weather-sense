@@ -3,12 +3,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 
 import Home from "@/screens/home";
+import Forecast from "@/screens/forecast";
 
 import { routes } from "@/common/routes";
 import { colors } from "@/common/theme";
 
 export type AppRoutesTypes = {
     [routes.HOME]: undefined;
+    [routes.FORECAST]: undefined;
 };
 
 const AppStack = createNativeStackNavigator<AppRoutesTypes>();
@@ -38,6 +40,7 @@ export default function AppRoutes() {
         <NavigationContainer theme={navigationTheme}>
             <Navigator screenOptions={{headerShown: false}}>
                 <Screen name={routes.HOME} component={Home} />
+                <Screen name={routes.FORECAST} component={Forecast} />
             </Navigator>
         </NavigationContainer>
     )

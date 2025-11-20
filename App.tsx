@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AppRoutes from "./src/routes";
 
+if(__DEV__) require("./ReactotronConfig");
+
 export default function App() {
   const queryClient = new QueryClient();
   return (
