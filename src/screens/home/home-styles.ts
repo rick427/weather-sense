@@ -7,7 +7,7 @@ export default StyleSheet.create({
     },
     badge: {
         borderWidth: 1,
-        borderColor: colors.transparent,
+        borderColor: colors.gray,
         paddingVertical: sizes.base,
         paddingHorizontal: sizes.base * 2,
         borderRadius: sizes.radius,
@@ -36,7 +36,7 @@ export default StyleSheet.create({
         textAlign: "center",
     },
     box: {
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: colors.muted,
         alignSelf: "stretch",
         padding: sizes.base * 2,
@@ -82,9 +82,11 @@ export default StyleSheet.create({
         backgroundColor: colors.gray_4,
         justifyContent: "center",
         alignItems: "center",
+        borderWidth: 1,
+        borderColor: colors.gray,
     },
     paper: {
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: colors.muted,
         padding: sizes.base * 2,
         justifyContent: "center",
@@ -100,5 +102,26 @@ export default StyleSheet.create({
         ...fonts.medium6,
         letterSpacing: 0.5,
         textTransform: "uppercase",
+    },
+    listWrapper: {
+        flex: 1,
+        padding: sizes.base * 2,
+    },
+    listInput: {
+        flex: 1,
+        borderWidth: 1,
+        padding: sizes.base * 1.5,
+        borderColor: colors.muted,
+        borderRadius: sizes.radius / 4,
+        ...fonts.regular4,
+        fontSize: sizes.fs4 - 2,
+    },
+    listBtn: {
+        width: sizes.base * 5,
+        height: sizes.base * 5,
+        backgroundColor: colors.dark,
+        borderRadius: sizes.radius,
+        justifyContent: "center",
+        alignItems: "center",
     },
 });

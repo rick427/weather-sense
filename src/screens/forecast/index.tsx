@@ -8,8 +8,8 @@ import Title from '@/components/title';
 import Stack from '@/components/stack';
 import Group from '@/components/group';
 import SafeView from '@/components/safeview';
-import BackButton from '@/components/backbutton';
-import LucideIcon from '@/components/lucideIcon';
+import BackButton from '@/components/back-button';
+import LucideIcon from '@/components/lucide-Icon';
 
 import { sizes, colors } from '@/common/theme';
 
@@ -68,7 +68,7 @@ export default function Forecast() {
                         return (
                             <View style={styles.card} key={day.date}>
                                 <Group gap={10} align='center'>
-                                    <LucideIcon name={getWeatherIcon(day.day.condition.text)} size={28} color={colors.muted} />
+                                    <LucideIcon name={getWeatherIcon(day.day.condition.text)} size={28} color={colors.dark} />
                                     <Title size="h2" c={colors.dark}>
                                         {Math.round(day.day.avgtemp_c)}°C
                                     </Title>

@@ -2,7 +2,7 @@ import { TouchableOpacity } from 'react-native';
 import { icons } from "lucide-react-native";
 
 import styles from "./backbutton.styles";
-import LucideIcon from "@/components/lucideIcon";
+import LucideIcon from "@/components/lucide-Icon";
 
 interface BackButtonProps {
     onPress: () => void;

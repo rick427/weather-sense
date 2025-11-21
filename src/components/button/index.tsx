@@ -6,7 +6,7 @@ import styles from "./button.styles";
 import { colors } from '@/common/theme';
 
 import Text from "@/components/text";
-import LucideIcon from '@/components/lucideIcon';
+import LucideIcon from '@/components/lucide-Icon';
 
 type ButtonVariants = "filled" | "outlined" | "light" | "danger" | "dark";
 

@@ -3,11 +3,13 @@ import { sizes, fonts, colors } from "@/common/theme";
 
 export default StyleSheet.create({
     tips: {
+        borderWidth: 1,
+        borderColor: colors.gray,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "flex-start",
         padding: sizes.base * 2,
-        backgroundColor: colors.gray_4,
+        backgroundColor: colors.gray_2,
         borderRadius: sizes.radius  / 2,
     },
     tipsTitle: {
@@ -22,7 +24,7 @@ export default StyleSheet.create({
         color: colors.muted,
     },
     card: {
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: colors.muted,
         flexDirection: "row",
         alignItems: "center",
@@ -42,8 +44,8 @@ export default StyleSheet.create({
         textTransform: "uppercase",
         paddingVertical: sizes.base / 6,
         paddingHorizontal: sizes.base,
-        backgroundColor: colors.gray,
-        borderRadius: sizes.radius * 2
+        backgroundColor: colors.gray_2,
+        borderRadius: sizes.radius * 2,
     },
     cardText: {
         ...fonts.medium4,

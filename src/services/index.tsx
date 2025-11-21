@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { WeatherParams, WeatherApiResponse } from "./weather-types";
 
-const API_KEY = "87187c278dda4e8080465952250711";
+const API_KEY = "855daf93fc154918b6071727252111";
 const BASE_URL = "https://api.weatherapi.com/v1";
 
 export const GET_WEATHER_QKEY = "/weather";
@@ -31,7 +31,7 @@ async function getWeather({city}:WeatherParams):Promise<WeatherApiResponse>{
 
 export function useGetWeather({city}:WeatherParams){
     return useQuery({
-        queryKey: [GET_WEATHER_QKEY],
+        queryKey: [GET_WEATHER_QKEY, city],
         queryFn: () => getWeather({city}),
         refetchOnWindowFocus: false,
         enabled: !!city,

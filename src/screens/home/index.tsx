@@ -1,6 +1,8 @@
+import { useRef, useState } from 'react';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
-import { View, ActivityIndicator, TouchableOpacity } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { View, ActivityIndicator, TouchableOpacity, useColorScheme, RefreshControl, TextInput } from 'react-native';
 
 import styles from "./home-styles";
 import Text from '@/components/text';
@@ -9,17 +11,25 @@ import Group from '@/components/group';
 import Stack from '@/components/stack';
 import Button from "@/components/button";
 import SafeView from '@/components/safeview';
-import LucideIcon from '@/components/lucideIcon';
+import LucideIcon from '@/components/lucide-Icon';
+import CountyList from '@/components/county-list';
+import BackdropComponent from '@/components/backdrop';
 
 import { colors } from '@/common/theme';
 import { routes } from '@/common/routes';
 
 import { useGetWeather } from '@/services';
 import type { AppRoutesTypes } from '@/routes';
+import { useFilterStore } from '@/store/filter.store';
 import type { WeatherApiResponse } from '@/services/weather-types';
 
 export default function Home() {
-    const { data, isLoading, error, refetch } = useGetWeather({city: "Nairobi"});
+    const { city, setCity } = useFilterStore(state => state);
+    const { data, isLoading, error, isFetching, refetch } = useGetWeather({city});
+
+    const colorScheme = useColorScheme();
+    const [value, setValue] = useState<string>("");
+    const sheetRef = useRef<BottomSheetModal>(null);
     const navigation = useNavigation<NativeStackNavigationProp<AppRoutesTypes>>();
 
     if (isLoading){
@@ -40,16 +50,14 @@ export default function Home() {
             <SafeView>
                 <Stack flex={1} justify='center' align="center">
                     <LucideIcon size={30} name="ServerCrash" />
-
                     <Stack gap={10} align='center'>
                         <Title size="h6" tt="uppercase" ls={1}>
-                            Voetsak! Server Broke
+                            Voetsak! Server Broke!
                         </Title>
                         <Text size="fs6" tt="uppercase" ls={1}>
                             Failed to load weather data. Please try again
                         </Text>
                     </Stack>
-
                     <Button 
                         onPress={refetch} 
                         title="Try again" 
@@ -62,7 +70,7 @@ export default function Home() {
 
     const { location, current, forecast } = data as WeatherApiResponse;
 
-    const getWeatherIcon = (text: string) => {
+    function getWeatherIcon (text: string){
         const condition = text.toLowerCase();
         if (condition.includes('sun')) return 'Sun';
         if (condition.includes('cloud')) return 'Cloud';
@@ -71,16 +79,35 @@ export default function Home() {
         if (condition.includes('storm') || condition.includes('thunder')) return 'CloudLightning';
         return 'Sun';
     }
+
+    function reset(){
+        sheetRef.current?.dismiss();
+    }
+
+    function onSearch(){
+        if(!value) return;
+
+        setCity(value);
+        setValue("");
+    }
+
+    const refreshControl = (
+        <RefreshControl
+            onRefresh={refetch} 
+            refreshing={isFetching}
+            tintColor={colors.dark}
+        />
+    );
     return (
-        <SafeView>
+        <SafeView refreshControl={refreshControl}>
             <Stack gap={10} align='center'>
-                <View style={styles.badge}>
-                    <LucideIcon name="Earth" size={20} strokeWidth={1.5} />
+                <TouchableOpacity style={styles.badge} onPress={() => sheetRef.current?.present()}>
+                    <LucideIcon name="MapPin" size={20} strokeWidth={1.5} />
 
                     <Text style={styles.badgeLabel}>
                         {location.name} | {new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}
                     </Text>
-                </View>
+                </TouchableOpacity>
                 <Title style={styles.cityLabel}>
                     {current.condition.text}
                 </Title>
@@ -97,7 +124,7 @@ export default function Home() {
 
                 <View style={styles.box}>
                     <Text style={styles.boxLabel}>
-                        Today has temperatures from {forecast.forecastday[0].day.mintemp_c}° 
+                        {city} has temperatures from {forecast.forecastday[0].day.mintemp_c}° 
                         - {forecast.forecastday[0].day.maxtemp_c}°, 
                         feels like {current.feelslike_c}°. 
                         Chance of rain are {forecast.forecastday[0].day.daily_chance_of_rain ?? 0}%. 
@@ -158,6 +185,38 @@ export default function Home() {
                     </Group>
                 </Stack>
             </Stack>
+
+            <BottomSheetModal              
+                ref={sheetRef}
+                snapPoints={["70%"]}
+                enableDynamicSizing={false}
+                enablePanDownToClose={true}
+                backdropComponent={BackdropComponent}
+                containerStyle={{ backgroundColor: "rgba(0,0,0,0.25)",}}
+                backgroundStyle={{ backgroundColor: colorScheme === "dark" ? colors.light : colors.light }}
+                handleIndicatorStyle={{ backgroundColor: colorScheme === "dark" ? colors.dark : colors.dark }}
+            >
+                <Stack style={styles.listWrapper}>
+                    <Group align='center'>
+                        <TextInput 
+                            value={value}
+                            style={styles.listInput} 
+                            onChangeText={t => setValue(t)}
+                            placeholderTextColor={colors.gray_sb}
+                            placeholder="Search by: Town | City | State | Country" 
+                        />
+                        <TouchableOpacity style={styles.listBtn} onPress={onSearch}>
+                            <LucideIcon 
+                                name="Search" 
+                                size={22} 
+                                strokeWidth={1.5} 
+                                color={colors.light} 
+                            />
+                        </TouchableOpacity>
+                    </Group>
+                    <CountyList reset={reset} />
+                </Stack>
+            </BottomSheetModal>
         </SafeView>
     )
 }
