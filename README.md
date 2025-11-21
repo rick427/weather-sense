@@ -86,7 +86,7 @@ These allow tests to run without requiring native binaries.
 - React Query (data fetching)
 
 ### Screenshots
-<img width="200" height="200" src="./screenshots/1.png" alt="home" />
+<img width="300" height="600" src="./screenshots/1.png" alt="home" />
 <img src="./screenshots/2.png" alt="forecast" />
 
 ### Troubleshooting
