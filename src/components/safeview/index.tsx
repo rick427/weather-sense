@@ -1,8 +1,8 @@
-import { ScrollView, StatusBar, RefreshControlProps } from 'react-native';
+import { ScrollView, StatusBar, useColorScheme, type RefreshControlProps, } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import styles from "./safeview.styles";
-import { sizes } from '@/common/theme';
+import { sizes, colors } from '@/common/theme';
 
 interface SafeViewProps {
     bg?: string;
@@ -15,8 +15,10 @@ interface SafeViewProps {
 }
 
 export default function SafeView(props:SafeViewProps) {
+    const colorScheme = useColorScheme();
+
     const { 
-        bg = "#ffffff",
+        bg = colorScheme === "dark" ? colors.dark : colors.light,
         children, 
         scrollRef,
         withScrollElement = true, 
@@ -27,31 +29,36 @@ export default function SafeView(props:SafeViewProps) {
     
     const resolvePadding = withPadding ? sizes.base * 2 : 0;
     return (
-        <SafeAreaView style={[styles.parent, {backgroundColor:bg}]} edges={['top']}>
-            <StatusBar
-                translucent={true}
-                animated={true}
-                barStyle="dark-content"
-                backgroundColor="transparent"
-            />
+        <>
+            <SafeAreaView 
+                style={[styles.parent, {backgroundColor:bg}]} 
+                edges={["top"]}
+            >
+                <StatusBar
+                    translucent={true}
+                    animated={true}
+                    barStyle="dark-content"
+                    backgroundColor="transparent"
+                />
 
-            {withScrollElement ? (
-                <ScrollView 
-                    ref={scrollRef}
-                    style={{backgroundColor: bg}}
-                    refreshControl={refreshControl}
-                    scrollEnabled={scrollEnabled}
-                    contentContainerStyle={[
-                        styles.main, 
-                        {
-                            padding: resolvePadding,
-                        }
-                    ]}
-                    showsVerticalScrollIndicator={false}
-                >
-                    {children}
-                </ScrollView>
-            ) : children}
-        </SafeAreaView>
+                {withScrollElement ? (
+                    <ScrollView 
+                        ref={scrollRef}
+                        style={{backgroundColor: bg}}
+                        refreshControl={refreshControl}
+                        scrollEnabled={scrollEnabled}
+                        contentContainerStyle={[
+                            styles.main, 
+                            {
+                                padding: resolvePadding,
+                            }
+                        ]}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        {children}
+                    </ScrollView>
+                ) : children}
+            </SafeAreaView>
+        </>
     )
 }

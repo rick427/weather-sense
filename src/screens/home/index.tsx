@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { View, ActivityIndicator, TouchableOpacity, useColorScheme, RefreshControl, TextInput } from 'react-native';
+import { View, ActivityIndicator, TouchableOpacity, RefreshControl, TextInput, useColorScheme } from 'react-native';
 
 import styles from "./home-styles";
 import Text from '@/components/text';
@@ -32,12 +32,24 @@ export default function Home() {
     const sheetRef = useRef<BottomSheetModal>(null);
     const navigation = useNavigation<NativeStackNavigationProp<AppRoutesTypes>>();
 
+    const badgeColor = colorScheme === "dark" ? "#444444" : colors.gray_4;
+    const badgeBorderColor = colorScheme === "dark" ? "#4444444" : colors.gray;
+    const iconColor = colorScheme === "dark" ? colors.light : colors.dark;
+    const tColor = colorScheme === "dark" ? colors.light : colors.dark;
+    const boxBorderColor = colorScheme === "dark" ? "#444444" : colors.muted;
+    const cardBgColor = colorScheme === "dark" ? "#444444" : colors.dark;
+    const pageBtnColor = colorScheme === "dark" ? "#444444" : colors.gray_4;
+    const paperBorderColor = colorScheme === "dark" ? "#444444" : colors.muted;
+    const listBtnColor = colorScheme === "dark" ? "#2d2d2dff" : colors.dark;
+    const listInputColor = colorScheme === "dark" ? "#2d2d2dff" : colors.gray_4;
+    const listInputBorder = colorScheme === "dark" ? "#2d2d2dff" : colors.gray_2;
+
     if (isLoading){
         return (
             <SafeView>
                 <Stack flex={1} gap={10} justify='center' align='center'>
-                    <ActivityIndicator size={30} color={colors.dark} />
-                    <Text size="fs6" tt="uppercase" ls={1}>
+                    <ActivityIndicator size={30} color={tColor} />
+                    <Text size="fs6" tt="uppercase" ls={1} c={tColor}>
                         Fetching Weather ...
                     </Text>
                 </Stack>
@@ -51,10 +63,10 @@ export default function Home() {
                 <Stack flex={1} justify='center' align="center">
                     <LucideIcon size={30} name="ServerCrash" />
                     <Stack gap={10} align='center'>
-                        <Title size="h6" tt="uppercase" ls={1}>
+                        <Title size="h6" tt="uppercase" ls={1} c={tColor}>
                             Voetsak! Server Broke!
                         </Title>
-                        <Text size="fs6" tt="uppercase" ls={1}>
+                        <Text size="fs6" tt="uppercase" ls={1} c={tColor}>
                             Failed to load weather data. Please try again
                         </Text>
                     </Stack>
@@ -101,29 +113,32 @@ export default function Home() {
     return (
         <SafeView refreshControl={refreshControl}>
             <Stack gap={10} align='center'>
-                <TouchableOpacity style={styles.badge} onPress={() => sheetRef.current?.present()}>
-                    <LucideIcon name="MapPin" size={20} strokeWidth={1.5} />
+                <TouchableOpacity 
+                    style={[styles.badge, {backgroundColor: badgeColor, borderColor: badgeBorderColor}]} 
+                    onPress={() => sheetRef.current?.present()}
+                >
+                    <LucideIcon name="MapPin" size={20} strokeWidth={1.5} color={iconColor} />
 
-                    <Text style={styles.badgeLabel}>
+                    <Text style={styles.badgeLabel} c={tColor}>
                         {location.name} | {new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}
                     </Text>
                 </TouchableOpacity>
-                <Title style={styles.cityLabel}>
+                <Title style={styles.cityLabel} c={tColor}>
                     {current.condition.text}
                 </Title>
             </Stack>
 
             <Stack align='center'>
-                <Title style={styles.title}>
+                <Title style={styles.title} c={tColor}>
                     {Math.round(current.temp_c)}°
                 </Title>
-                <Text style={styles.subtitle}>
+                <Text style={styles.subtitle} c={tColor}>
                     H:{forecast.forecastday[0].day.maxtemp_c}° •
                     L:{forecast.forecastday[0].day.mintemp_c}°
                 </Text>
 
-                <View style={styles.box}>
-                    <Text style={styles.boxLabel}>
+                <View style={[styles.box, {borderColor: boxBorderColor}]}>
+                    <Text style={styles.boxLabel} c={tColor}>
                         {city} has temperatures from {forecast.forecastday[0].day.mintemp_c}° 
                         - {forecast.forecastday[0].day.maxtemp_c}°, 
                         feels like {current.feelslike_c}°. 
@@ -133,7 +148,7 @@ export default function Home() {
                     </Text>
                 </View>
 
-                <View style={styles.card}>
+                <View style={[styles.card, {backgroundColor: cardBgColor}]}>
                     <Stack gap={10} align='center'>
                         <LucideIcon name="Droplets" size={30} color={colors.light} />
                         <Stack gap={5} align='center'>
@@ -161,23 +176,26 @@ export default function Home() {
 
                 <Stack style={{alignSelf: "stretch"}}>
                     <Group justify='space-between' align='center'>
-                        <Title style={styles.pageLabel}>
+                        <Title style={styles.pageLabel} c={tColor}>
                             Weekly Forecast 
                         </Title>
-                        <TouchableOpacity style={styles.pageBtn} onPress={() => navigation.navigate(routes.FORECAST)}>
-                            <LucideIcon name="MoveRight" />
+                        <TouchableOpacity 
+                            style={[styles.pageBtn, {backgroundColor: pageBtnColor, borderColor: pageBtnColor}]} 
+                            onPress={() => navigation.navigate(routes.FORECAST)}
+                        >
+                            <LucideIcon name="MoveRight" color={iconColor} />
                         </TouchableOpacity>
                     </Group>
 
                     <Group justify="space-between" align='center'>
                         {forecast.forecastday.slice(0, 4).map(day => (
-                            <View style={styles.paper} key={day.date}>
-                                <Title style={styles.paperTitle}>
+                            <View style={[styles.paper, {borderColor: paperBorderColor}]} key={day.date}>
+                                <Title style={styles.paperTitle} c={tColor}>
                                     A:{Math.round(day.day.avgtemp_c)}°
                                 </Title>
 
-                                <LucideIcon name={getWeatherIcon(day.day.condition.text)} />
-                                <Text style={styles.paperSubtitle}>
+                                <LucideIcon name={getWeatherIcon(day.day.condition.text)} color={iconColor} />
+                                <Text style={styles.paperSubtitle} c={tColor}>
                                     {new Date(day.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                                 </Text>
                             </View>
@@ -193,19 +211,19 @@ export default function Home() {
                 enablePanDownToClose={true}
                 backdropComponent={BackdropComponent}
                 containerStyle={{ backgroundColor: "rgba(0,0,0,0.25)",}}
-                backgroundStyle={{ backgroundColor: colorScheme === "dark" ? colors.light : colors.light }}
-                handleIndicatorStyle={{ backgroundColor: colorScheme === "dark" ? colors.dark : colors.dark }}
+                backgroundStyle={{ backgroundColor: colorScheme === "dark" ? "#444444" : colors.light }}
+                handleIndicatorStyle={{ backgroundColor: colorScheme === "dark" ? colors.light : colors.dark }}
             >
                 <Stack style={styles.listWrapper}>
                     <Group align='center'>
                         <TextInput 
                             value={value}
-                            style={styles.listInput} 
+                            style={[styles.listInput, {backgroundColor: listInputColor, borderColor: listInputBorder}]} 
                             onChangeText={t => setValue(t)}
                             placeholderTextColor={colors.gray_sb}
                             placeholder="Search by: Town | City | State | Country" 
                         />
-                        <TouchableOpacity style={styles.listBtn} onPress={onSearch}>
+                        <TouchableOpacity style={[styles.listBtn, {backgroundColor: listBtnColor}]} onPress={onSearch}>
                             <LucideIcon 
                                 name="Search" 
                                 size={22} 

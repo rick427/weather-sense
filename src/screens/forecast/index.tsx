@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View , useColorScheme} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -19,6 +19,8 @@ import type { WeatherApiResponse } from '@/services/weather-types';
 
 export default function Forecast() {
     const { data } = useGetWeather({city: "Nairobi"});
+
+    const colorScheme = useColorScheme();
     const navigation = useNavigation<NativeStackNavigationProp<AppRoutesTypes>>();
 
     const getWeatherIcon = (text: string) => {
@@ -32,31 +34,37 @@ export default function Forecast() {
     };
 
     const forecast = (data as WeatherApiResponse)?.forecast?.forecastday ?? [];
+
+    const iconColor = colorScheme === "dark" ? colors.light : colors.dark;
+    const tColor = colorScheme === "dark" ? colors.light : colors.dark;
+    const tipsBgColor = colorScheme === "dark" ? "#444444" : colors.gray_2;
+    const cardBorderColor = colorScheme === "dark" ? "#444444" : colors.muted;
+    const cardLabelBgColor = colorScheme === "dark" ? "#444444" : colors.gray_2;
     return (
         <SafeView>
             <Stack flex={1} gap={sizes.base * 3}>
                 <BackButton onPress={navigation.goBack} />
 
                 <Stack gap={10}>
-                    <Title size="h3">
+                    <Title size="h3" c={tColor}>
                         Weekly Forecast
                     </Title>
 
-                    <View style={styles.tips}>
+                    <View style={[styles.tips, {backgroundColor: tipsBgColor, borderColor: tipsBgColor}]}>
                         <Group flexWrap="nowrap" flex={0.95}>
-                            <LucideIcon name="Info" size={18} strokeWidth={1.5} />
+                            <LucideIcon name="Info" size={18} strokeWidth={1.5} color={iconColor} />
                             <Stack flex={1} gap={5}>
-                                <Title style={styles.tipsTitle}>
+                                <Title style={styles.tipsTitle} c={tColor}>
                                     Weather Tip
                                 </Title>
-                                <Text style={styles.tipsText}>
+                                <Text style={styles.tipsText} c={tColor}>
                                     Check the weekly forecast to plan outdoor activities 
                                     and stay prepared for sudden weather changes.
                                 </Text>
                             </Stack>
                         </Group>
 
-                        <LucideIcon name="X" size={18} strokeWidth={1.5} />
+                        <LucideIcon name="X" size={18} strokeWidth={1.5} color={iconColor} />
                     </View>
                 </Stack>
 
@@ -66,22 +74,22 @@ export default function Forecast() {
                         const dayName = dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
                         const dayMonth = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
                         return (
-                            <View style={styles.card} key={day.date}>
+                            <View style={[styles.card, {borderColor: cardBorderColor}]} key={day.date}>
                                 <Group gap={10} align='center'>
-                                    <LucideIcon name={getWeatherIcon(day.day.condition.text)} size={28} color={colors.dark} />
-                                    <Title size="h2" c={colors.dark}>
+                                    <LucideIcon name={getWeatherIcon(day.day.condition.text)} size={28} color={iconColor} />
+                                    <Title size="h2" c={tColor}>
                                         {Math.round(day.day.avgtemp_c)}°C
                                     </Title>
                                 </Group>
 
                                 <Stack gap={10} align='flex-end'>
-                                    <Text style={styles.cardTitle}>
+                                    <Text style={styles.cardTitle} c={tColor}>
                                         {dayName}, {dayMonth}
                                     </Text>
-                                    <Text style={styles.cardText}>
+                                    <Text style={styles.cardText} c={tColor}>
                                         H:{Math.round(day.day.maxtemp_c)}° L:{Math.round(day.day.mintemp_c)}°
                                     </Text>
-                                    <Text style={styles.cardLabel}>
+                                    <Text style={[styles.cardLabel, {backgroundColor: cardLabelBgColor}]} c={tColor}>
                                         {day.day.condition.text}
                                     </Text>
                                 </Stack>

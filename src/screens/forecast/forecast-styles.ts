@@ -4,12 +4,10 @@ import { sizes, fonts, colors } from "@/common/theme";
 export default StyleSheet.create({
     tips: {
         borderWidth: 1,
-        borderColor: colors.gray,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "flex-start",
         padding: sizes.base * 2,
-        backgroundColor: colors.gray_2,
         borderRadius: sizes.radius  / 2,
     },
     tipsTitle: {
@@ -21,11 +19,9 @@ export default StyleSheet.create({
     tipsText: {
         ...fonts.regular5,
         letterSpacing: 0.5,
-        color: colors.muted,
     },
     card: {
         borderWidth: 1,
-        borderColor: colors.muted,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
@@ -35,7 +31,6 @@ export default StyleSheet.create({
     cardTitle: {
         ...fonts.semibold4,
         fontSize: sizes.fs4 - 2,
-        color: colors.dark,
     },
     cardLabel: {
         ...fonts.bold6,
@@ -44,7 +39,6 @@ export default StyleSheet.create({
         textTransform: "uppercase",
         paddingVertical: sizes.base / 6,
         paddingHorizontal: sizes.base,
-        backgroundColor: colors.gray_2,
         borderRadius: sizes.radius * 2,
     },
     cardText: {

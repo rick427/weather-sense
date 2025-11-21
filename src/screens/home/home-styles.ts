@@ -7,11 +7,9 @@ export default StyleSheet.create({
     },
     badge: {
         borderWidth: 1,
-        borderColor: colors.gray,
         paddingVertical: sizes.base,
         paddingHorizontal: sizes.base * 2,
         borderRadius: sizes.radius,
-        backgroundColor: colors.gray_4,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
@@ -21,7 +19,6 @@ export default StyleSheet.create({
         ...fonts.medium4,
         fontSize: sizes.fs4 - 3,
         letterSpacing: 0.5,
-        color: colors.dark,
         textAlign: "center",
     },
     title: {
@@ -37,7 +34,6 @@ export default StyleSheet.create({
     },
     box: {
         borderWidth: 1,
-        borderColor: colors.muted,
         alignSelf: "stretch",
         padding: sizes.base * 2,
         borderRadius: sizes.radius / 2,
@@ -46,7 +42,6 @@ export default StyleSheet.create({
     boxLabel: {
         ...fonts.regular4,
         fontSize: sizes.fs4 - 2,
-        color: colors.dark,
         letterSpacing: 0.5,
     },
     card: {
@@ -54,7 +49,6 @@ export default StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: colors.dark,
         padding: sizes.base * 2,
         borderRadius: sizes.radius / 2,
         gap: sizes.base * 6,
@@ -79,7 +73,6 @@ export default StyleSheet.create({
         width: sizes.base * 5,
         height: sizes.base * 5,
         borderRadius: sizes.radius * 5,
-        backgroundColor: colors.gray_4,
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 1,
@@ -87,7 +80,6 @@ export default StyleSheet.create({
     },
     paper: {
         borderWidth: 1,
-        borderColor: colors.muted,
         padding: sizes.base * 2,
         justifyContent: "center",
         alignItems: "center",
@@ -111,7 +103,6 @@ export default StyleSheet.create({
         flex: 1,
         borderWidth: 1,
         padding: sizes.base * 1.5,
-        borderColor: colors.muted,
         borderRadius: sizes.radius / 4,
         ...fonts.regular4,
         fontSize: sizes.fs4 - 2,
@@ -119,7 +110,6 @@ export default StyleSheet.create({
     listBtn: {
         width: sizes.base * 5,
         height: sizes.base * 5,
-        backgroundColor: colors.dark,
         borderRadius: sizes.radius,
         justifyContent: "center",
         alignItems: "center",

@@ -8,6 +8,5 @@ export default StyleSheet.create({
         borderRadius: sizes.radius * 6,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: colors.gray_4
     },
 })
