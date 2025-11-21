@@ -86,8 +86,10 @@ These allow tests to run without requiring native binaries.
 - React Query (data fetching)
 
 ### Screenshots
-<img width="300" height="600" src="./screenshots/1.png" alt="home" />
-<img src="./screenshots/2.png" alt="forecast" />
+<p float="left">
+  <img src="./screenshots/1.png" width="300" height="600" alt="home" />
+  <img src="./screenshots/2.png" width="300" height="600" alt="forecast" />
+</p>
 
 ### Troubleshooting
 - Metro not starting: Kill existing metro processes: npx react-native start --reset-cache.
