@@ -1,97 +1,94 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Weathr-Sense 🌤️
+Weathr-Sense is a React Native mobile application that provides detailed weather forecasts for locations in Kenya. Users can select counties, view current weather conditions, humidity, wind, visibility, and a weekly forecast with temperature trends. The app leverages modern UI components, bottom sheets, and state management for a smooth, interactive experience.
 
-# Getting Started
+## Features
+- Current Weather: Displays temperature, weather conditions, and feels-like temperature.
+- Humidity, Wind & Visibility: Shows key weather stats in an intuitive card layout.
+- Weekly Forecast: Provides a four-day forecast with temperature highs/lows and weather icons.
+- County Selection: Select any county from Kenya using a searchable bottom sheet modal.
+- Pull-to-Refresh: Refresh the weather data by pulling down on the main screen.
+- Dark & Light Mode Support: Adapts automatically to system theme.
+- Offline Fallback: Graceful error handling when data cannot be fetched.
+- Interactive UI: Fast refresh and smooth navigation between screens.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Get Started
+Prerequisites: Make sure you have completed the React Native Environment Setup
+before proceeding.
 
-## Step 1: Start Metro
-
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
-
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
+### Step 1: Install Dependencies
+```bash
 # Using npm
-npm start
+npm install
 
 # OR using Yarn
-yarn start
+yarn install
 ```
 
-## Step 2: Build and run your app
+### Step 2: Start Metro
+Metro is the JavaScript bundler that serves your app to the emulator/device.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
+```bash
+npm start
+# or
+yarn start
+```
+### Step 3: Run the App
+#### Android
+```bash
 npm run android
-
-# OR using Yarn
+# or
 yarn android
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
+#### IOS
+```bash
+# Install CocoaPods if not already
 bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
 bundle exec pod install
-```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
 npm run ios
-
-# OR using Yarn
+# or
 yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Step 4: Use the App
+- Tap the MapPin badge to open the county selector bottom sheet.
+- Select a county to view its current weather and weekly forecast.
+- Pull down to refresh the weather data.
+- Navigate to the weekly forecast for a more detailed outlook.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### Running Tests
+Weathr-Sense uses Jest for testing. Some native modules like react-native-gesture-handler and @gorhom/bottom-sheet are mocked to run tests in a Node environment.
 
-## Step 3: Modify your app
+```bash
+# Run all tests
+npm test
+# or
+yarn test 
+```
 
-Now that you have successfully run the app, let's make changes!
+### Mocking Native Modules for Tests
+In __mocks__/:
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+- react-native-gesture-handler.js
+- @gorhom/bottom-sheet.js
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+These allow tests to run without requiring native binaries.
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+### Technologies Used
+- React Native 0.82.1
+- TypeScript
+- Zustand (state management)
+- @gorhom/bottom-sheet (bottom sheet modals)
+- React Navigation (navigation)
+- Lucide Icons (icons)
+- Jest (testing)
+- React Query (data fetching)
 
-## Congratulations! :tada:
+### Screenshots
 
-You've successfully run and modified your React Native App. :partying_face:
 
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### Troubleshooting
+- Metro not starting: Kill existing metro processes: npx react-native start --reset-cache.
+- iOS build fails: Make sure you have installed pods: cd ios && pod install.
+- Test errors with native modules: Ensure mocks are in __mocks__/ and moduleNameMapper is configured in jest.config.js.
